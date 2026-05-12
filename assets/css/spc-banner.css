@@ -65,7 +65,7 @@
 
 .spc-banner__title {
 	margin: 0 0 0.5rem;
-	font-size: 1rem;
+	font-size: 1.25rem;
 	font-weight: 700;
 	color: var(--spc-text);
 }
@@ -263,10 +263,19 @@
 	border: 0;
 	cursor: pointer;
 	background: var(--spc-bg);
-	color: var(--spc-text);
+	color: var(--spc-primary);
 	box-shadow: 0 0.375rem 1.25rem rgba( 0, 0, 0, 0.2 );
-	font-size: 1.25rem;
 	line-height: 1;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.spc-badge svg {
+	width: 1.625rem;
+	height: 1.625rem;
+	display: block;
+	fill: currentColor;
 }
 .spc-badge.spc-pos-bottom-right { right: 1rem; }
 .spc-badge.spc-pos-bottom-left,

@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.0.3 =
+* Banner heading enlarged to 1.25rem.
+* Revisit badge now uses a cookie SVG icon (inherits the Accept-button colour) instead of an emoji.
 
 = 1.0.2 =
 * Banner now sizes from a "Banner width" setting (default 26.25rem ≈ 420px) on the Banner & design tab; applies to the box layouts.

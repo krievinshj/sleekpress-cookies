@@ -5,6 +5,12 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2026-05-12
+
+### Changed
+- Banner heading font size increased to `1.25rem`.
+- The floating "cookie settings" badge now uses an inline cookie SVG icon (drawn with `currentColor`, inheriting the Accept-button colour via `--spc-primary`) instead of the 🍪 emoji.
+
 ## [1.0.2] - 2026-05-12
 
 ### Added
@@ -31,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.0.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.3
 [1.0.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.2
 [1.0.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.1
 [1.0.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.0
