@@ -327,14 +327,38 @@
 		root.appendChild( badgeEl );
 	}
 
-	// Expose for the [sleekpress_cookie_settings] shortcode / .spc-open-prefs links.
+	// Hash fragments that should open the preferences modal, e.g.
+	// <a href="#cookies-settings">Cookie settings</a> in the footer.
+	var PREFS_HASH = /^#(cookies?-settings|cookies?-preferences|cookies?-consent)$/i;
+
+	function maybeOpenFromHash() {
+		if ( PREFS_HASH.test( location.hash || '' ) ) {
+			openModal();
+		}
+	}
+
+	// Open via: the [sleekpress_cookie_settings] shortcode / any .spc-open-prefs
+	// element, or a link pointing at one of the recognised hash fragments.
 	document.addEventListener( 'click', function ( e ) {
-		var t = e.target.closest ? e.target.closest( '.spc-open-prefs' ) : null;
-		if ( t ) {
+		if ( ! e.target.closest ) {
+			return;
+		}
+		var trigger = e.target.closest( '.spc-open-prefs' );
+		if ( ! trigger ) {
+			var link = e.target.closest( 'a[href]' );
+			if ( link && PREFS_HASH.test( link.getAttribute( 'href' ) || '' ) ) {
+				trigger = link;
+			}
+		}
+		if ( trigger ) {
 			e.preventDefault();
 			openModal();
 		}
 	} );
+
+	// In case the page is loaded with the hash already in the URL, or it
+	// changes (e.g. another in-page link sets it).
+	window.addEventListener( 'hashchange', maybeOpenFromHash );
 
 	/* ---------- init ---------- */
 
@@ -351,6 +375,8 @@
 	} else {
 		openBanner();
 	}
+
+	maybeOpenFromHash();
 
 	// Report cookies seen in this browser (deferred, low priority).
 	if ( 'requestIdleCallback' in window ) {

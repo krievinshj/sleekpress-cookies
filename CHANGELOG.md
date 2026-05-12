@@ -5,6 +5,11 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-05-12
+
+### Added
+- Plain anchor links to `#cookies-settings` (and aliases `#cookie-settings`, `#cookies-preferences`, `#cookie-preferences`, `#cookies-consent`, `#cookie-consent`) open the preferences modal — no shortcode or special class needed. Also triggered on page load / `hashchange` when the URL contains one of those fragments, so cross-page links like `/contact/#cookies-settings` work.
+
 ## [1.0.3] - 2026-05-12
 
 ### Changed
@@ -37,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.0.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.4
 [1.0.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.3
 [1.0.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.2
 [1.0.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.1

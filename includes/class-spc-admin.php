@@ -419,7 +419,7 @@ class SPC_Admin {
 		echo '<p><button type="submit" class="button button-primary">' . esc_html__( 'Save changes', 'sleekpress-cookies' ) . '</button></p>';
 		echo '</form>';
 
-		echo '<p class="description">' . esc_html__( 'Tip: use the [sleekpress_cookie_settings] shortcode (or a link with class "spc-open-prefs") anywhere to let visitors reopen the preferences modal.', 'sleekpress-cookies' ) . '</p>';
+		echo '<p class="description">' . wp_kses_post( __( 'Tip: let visitors reopen the preferences modal anywhere with the <code>[sleekpress_cookie_settings]</code> shortcode, a link with <code>class="spc-open-prefs"</code>, or simply a link to <code>#cookies-settings</code> (also accepts <code>#cookie-settings</code>, <code>#cookies-preferences</code>, <code>#cookies-consent</code>).', 'sleekpress-cookies' ) ) . '</p>';
 	}
 
 	/* ----- Consent Mode tab ----- */
