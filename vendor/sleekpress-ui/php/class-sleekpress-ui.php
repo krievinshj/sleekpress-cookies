@@ -59,7 +59,11 @@ class SleekPress_UI {
 		if ( file_exists( $css_path ) ) {
 			wp_enqueue_style( $args['handle'], $css_url, array(), $args['version'] );
 		}
-		wp_enqueue_script( $args['handle'], $js_url, array(), $args['version'], true );
+		// Depend on wp-api-fetch: it ships a managed `wp_rest` nonce (with
+		// automatic refresh on expiry) and a root-URL middleware, so the app's
+		// REST client can route through window.wp.apiFetch instead of carrying
+		// its own nonce.
+		wp_enqueue_script( $args['handle'], $js_url, array( 'wp-api-fetch' ), $args['version'], true );
 
 		$config = array_merge(
 			array(
