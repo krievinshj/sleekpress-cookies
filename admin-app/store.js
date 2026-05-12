@@ -42,7 +42,7 @@ async function load() {
 		state.loaded = true;
 	} catch ( e ) {
 		state.loadFailed = true;
-		state.loadError = ( e.status ? '[HTTP ' + e.status + '] ' : '' ) + ( e.message || 'unknown error' );
+		state.loadError = ( e.status ? '[HTTP ' + e.status + '] ' : '' ) + ( e.code ? e.code + ' — ' : '' ) + ( e.message || 'unknown error' );
 		toast.error( 'Failed to load: ' + e.message );
 	} finally {
 		state.loading = false;

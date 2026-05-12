@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.1.5 =
+* Reverted the wp.apiFetch routing from 1.1.4: its automatic nonce-refresh-and-retry could spin into a request loop on sites where the REST nonce never verifies. Back to a single plain fetch with the injected nonce; the "couldn't load" panel now also shows the error code.
 
 = 1.1.4 =
 * Fixed: admin REST calls could fail with "Cookie check failed" (invalid nonce). The admin app now routes requests through WordPress's own wp.apiFetch, which manages the REST nonce — including refreshing it automatically when it expires.

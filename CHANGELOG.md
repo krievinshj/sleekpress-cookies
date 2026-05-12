@@ -5,6 +5,11 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2026-05-12
+
+### Changed
+- Reverted the `wp.apiFetch` routing introduced in 1.1.4: on sites where the `wp_rest` nonce never verifies (host/cookie mismatch, stale admin-page cache, …) its automatic nonce-refresh-and-retry would loop, flooding the server with requests. The kit's REST client is back to a single plain `fetch()` per request with the injected nonce (sent as `X-WP-Nonce` header + `_wpnonce` query param). Dropped the `wp-api-fetch` script dependency. The "couldn't load" panel now also surfaces the REST error `code`.
+
 ## [1.1.4] - 2026-05-12
 
 ### Fixed
@@ -79,6 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.1.5]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.5
 [1.1.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.4
 [1.1.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.3
 [1.1.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.2
