@@ -223,7 +223,10 @@ class SPC_Frontend {
 
 		// Colour variables.
 		$css = sprintf(
-			':root{--spc-bg:%s;--spc-text:%s;--spc-primary:%s;--spc-primary-text:%s;--spc-secondary:%s;--spc-secondary-text:%s;--spc-radius:%dpx;}',
+			// Must match the selector used in spc-banner.css (#spc-root) so the
+			// custom properties actually override the bundled defaults — a
+			// ":root" rule would lose to "#spc-root" on specificity.
+			'#spc-root{--spc-bg:%s;--spc-text:%s;--spc-primary:%s;--spc-primary-text:%s;--spc-secondary:%s;--spc-secondary-text:%s;--spc-radius:%dpx;}',
 			esc_html( $s['color_bg'] ),
 			esc_html( $s['color_text'] ),
 			esc_html( $s['color_primary'] ),

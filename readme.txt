@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixed: banner button/background colours set in the admin were ignored due to a CSS specificity clash; the generated inline styles now correctly override the defaults.
 
 = 1.0.0 =
 * Initial release: consent banner (Accept/Decline/Adjust), preferences modal with category toggles, cookie scanner with built-in service database and live cookie reporting, optional OpenAI categorisation, banner customisation, Google Consent Mode v2, optional GTM/GA4 injection, reopen-preferences shortcode.
