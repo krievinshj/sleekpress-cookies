@@ -5,6 +5,11 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-05-12
+
+### Changed
+- The admin "couldn't load" state now surfaces the HTTP status / error message and the REST endpoint it attempted, instead of a generic message — easier to diagnose connectivity / auth problems.
+
 ## [1.1.2] - 2026-05-12
 
 ### Fixed
@@ -69,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.1.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.3
 [1.1.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.2
 [1.1.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.1
 [1.1.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.0

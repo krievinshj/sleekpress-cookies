@@ -7,6 +7,7 @@ const state = reactive( {
 	loaded: false,
 	loading: false,
 	loadFailed: false,
+	loadError: '',
 	saving: false,
 	settings: null,
 	cookies: null, // { category: [rows] }
@@ -32,6 +33,7 @@ async function load() {
 	if ( state.loading ) return;
 	state.loading = true;
 	state.loadFailed = false;
+	state.loadError = '';
 	try {
 		const [ s, c ] = await Promise.all( [ api.get( '/settings' ), api.get( '/cookies' ) ] );
 		applySettingsPayload( s );
@@ -40,6 +42,7 @@ async function load() {
 		state.loaded = true;
 	} catch ( e ) {
 		state.loadFailed = true;
+		state.loadError = ( e.status ? '[HTTP ' + e.status + '] ' : '' ) + ( e.message || 'unknown error' );
 		toast.error( 'Failed to load: ' + e.message );
 	} finally {
 		state.loading = false;

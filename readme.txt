@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.1.3 =
+* The admin's "couldn't load" screen now shows the actual error and the endpoint it tried, to make diagnosing connectivity issues easier.
 
 = 1.1.2 =
 * Fixed: admin REST calls returned 403 when the site's configured URL didn't exactly match the URL being browsed (common on local dev) — the cross-origin request dropped the auth cookie. The admin app now uses a same-origin (relative) REST URL and also sends the nonce as a query parameter.
