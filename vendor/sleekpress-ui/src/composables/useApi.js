@@ -2,7 +2,9 @@
  * Minimal REST client for SleekPress admin apps.
  *
  * Reads defaults from a global config object that the PHP loader prints
- * (window[ configKey ] = { restBase, nonce }). Pass overrides if needed.
+ * (window[ configKey ] = { restBase, nonce }). The config is resolved lazily on
+ * each request, so it doesn't matter whether configureApi() runs before or
+ * after a module calls createApi() (ES module load order).
  */
 
 let defaults = { restBase: '', nonce: '' };
@@ -12,10 +14,15 @@ export function configureApi( cfg = {} ) {
 }
 
 export function createApi( opts = {} ) {
-	const restBase = ( opts.restBase || defaults.restBase || '' ).replace( /\/$/, '' );
-	const nonce = opts.nonce || defaults.nonce || '';
+	function resolved() {
+		return {
+			restBase: ( opts.restBase || defaults.restBase || '' ).replace( /\/$/, '' ),
+			nonce: opts.nonce || defaults.nonce || '',
+		};
+	}
 
 	async function request( method, path, body ) {
+		const { restBase, nonce } = resolved();
 		const url = restBase + ( path.startsWith( '/' ) ? path : '/' + path );
 		const res = await fetch( url, {
 			method,

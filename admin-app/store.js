@@ -6,6 +6,7 @@ const api = createApi();
 const state = reactive( {
 	loaded: false,
 	loading: false,
+	loadFailed: false,
 	saving: false,
 	settings: null,
 	cookies: null, // { category: [rows] }
@@ -30,6 +31,7 @@ function applySettingsPayload( p ) {
 async function load() {
 	if ( state.loading ) return;
 	state.loading = true;
+	state.loadFailed = false;
 	try {
 		const [ s, c ] = await Promise.all( [ api.get( '/settings' ), api.get( '/cookies' ) ] );
 		applySettingsPayload( s );
@@ -37,6 +39,7 @@ async function load() {
 		if ( ! state.categories.length ) state.categories = c.categories || [];
 		state.loaded = true;
 	} catch ( e ) {
+		state.loadFailed = true;
 		toast.error( 'Failed to load: ' + e.message );
 	} finally {
 		state.loading = false;
