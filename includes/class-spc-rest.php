@@ -28,16 +28,51 @@ class SPC_Rest {
 			)
 		);
 
+		$can_manage = function () {
+			return current_user_can( 'manage_options' );
+		};
 		$admin = array(
 			'methods'             => 'POST',
-			'permission_callback' => function () {
-				return current_user_can( 'manage_options' );
-			},
+			'permission_callback' => $can_manage,
 		);
 
 		register_rest_route( self::NS, '/scan', $admin + array( 'callback' => array( $this, 'scan' ) ) );
 		register_rest_route( self::NS, '/ai-categorize', $admin + array( 'callback' => array( $this, 'ai_categorize' ) ) );
 		register_rest_route( self::NS, '/merge', $admin + array( 'callback' => array( $this, 'merge' ) ) );
+
+		register_rest_route(
+			self::NS,
+			'/settings',
+			array(
+				array(
+					'methods'             => 'GET',
+					'permission_callback' => $can_manage,
+					'callback'            => array( $this, 'get_settings' ),
+				),
+				array(
+					'methods'             => 'POST',
+					'permission_callback' => $can_manage,
+					'callback'            => array( $this, 'save_settings' ),
+				),
+			)
+		);
+
+		register_rest_route(
+			self::NS,
+			'/cookies',
+			array(
+				array(
+					'methods'             => 'GET',
+					'permission_callback' => $can_manage,
+					'callback'            => array( $this, 'get_cookies' ),
+				),
+				array(
+					'methods'             => 'POST',
+					'permission_callback' => $can_manage,
+					'callback'            => array( $this, 'save_cookies' ),
+				),
+			)
+		);
 	}
 
 	/**
@@ -84,6 +119,55 @@ class SPC_Rest {
 			return new WP_REST_Response( array( 'error' => 'no rows' ), 400 );
 		}
 		$table = SPC_Scanner::merge_into_table( $rows );
-		return new WP_REST_Response( array( 'ok' => true, 'table' => $table ), 200 );
+		return new WP_REST_Response( array( 'ok' => true, 'cookies' => $table ), 200 );
+	}
+
+	/* ---------------- settings ---------------- */
+
+	private function settings_payload() {
+		return array(
+			'settings'      => SPC_Settings::get(),
+			'categories'    => SPC_Settings::categories_payload(),
+			'privacyAuto'   => SPC_Settings::privacy_url(),
+			'wpPrivacyUrl'  => function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '',
+			'aiReady'       => SPC_AI::is_configured(),
+			'version'       => SPC_VERSION,
+			'lastScan'      => SPC_Scanner::last_scan(),
+		);
+	}
+
+	public function get_settings() {
+		return new WP_REST_Response( $this->settings_payload(), 200 );
+	}
+
+	public function save_settings( WP_REST_Request $req ) {
+		$in = $req->get_param( 'settings' );
+		if ( ! is_array( $in ) ) {
+			return new WP_REST_Response( array( 'error' => 'no settings' ), 400 );
+		}
+		SPC_Settings::save( SPC_Settings::sanitize( $in ) );
+		return new WP_REST_Response( $this->settings_payload(), 200 );
+	}
+
+	/* ---------------- cookie list ---------------- */
+
+	private function cookies_payload() {
+		return array(
+			'cookies'    => SPC_Settings::cookies(),
+			'categories' => SPC_Settings::categories_payload(),
+		);
+	}
+
+	public function get_cookies() {
+		return new WP_REST_Response( $this->cookies_payload(), 200 );
+	}
+
+	public function save_cookies( WP_REST_Request $req ) {
+		$table = $req->get_param( 'cookies' );
+		if ( ! is_array( $table ) ) {
+			return new WP_REST_Response( array( 'error' => 'no cookies' ), 400 );
+		}
+		SPC_Settings::save_cookies( $table );
+		return new WP_REST_Response( $this->cookies_payload(), 200 );
 	}
 }

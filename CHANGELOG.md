@@ -5,6 +5,23 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-05-12
+
+### Added
+- **SleekPress UI kit** (`vendor/sleekpress-ui/`): a reusable Vue 3 admin component library — design tokens, ~17 components (`SpAppShell`, `SpCard`, `SpFormRow`, `SpButton`, `SpToggle`, `SpSelect`, `SpModal`, `SpTable`, `SpNotice`, `SpBadge`, …), `useApi`/`useToast` composables, an importable Vite base config, and a PHP loader (`SleekPress_UI::enqueue_app()` / `render_root()`). Vendored here, with a README + `bin/sync.sh` for reuse across other SleekPress plugins.
+- Live banner preview on the Banner & design screen.
+- REST endpoints: `GET/POST /spc/v1/settings` and `GET/POST /spc/v1/cookies`; `SPC_Settings::sanitize()` for unified validation.
+
+### Changed
+- The entire admin is now a single Vue 3 single-page app (`admin-app/`, hash router) using the kit — modern, consistent, JS-driven. It saves over REST with inline toast feedback instead of full-page form submits.
+- Build step added: `package.json` + `vite.config.js`; the app is bundled to `assets/admin/dist/admin.js` + `admin.css` (committed). Run `npm install && npm run build` after changing `admin-app/`.
+
+### Removed
+- The old PHP-rendered admin screens (`view_*`, `handle_save`, form helpers in `SPC_Admin`) and `assets/{css,js}/spc-admin.*`.
+
+### Unchanged
+- The front-end consent banner, Consent Mode v2 output, and all visitor-facing behaviour.
+
 ## [1.0.4] - 2026-05-12
 
 ### Added
@@ -42,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.1.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.0
 [1.0.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.4
 [1.0.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.3
 [1.0.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.2

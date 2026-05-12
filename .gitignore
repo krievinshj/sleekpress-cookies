@@ -5,7 +5,8 @@ Thumbs.db
 .vscode/
 *.sublime-*
 
-# Dependencies / build (not used yet, but ignore by default)
+# Build deps (the built bundle in assets/admin/dist IS committed)
 node_modules/
-vendor/
 *.log
+
+# Note: vendor/sleekpress-ui/ is the vendored shared UI kit — it is committed.

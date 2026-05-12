@@ -121,6 +121,95 @@ class SPC_Settings {
 	}
 
 	/**
+	 * Sanitise a (possibly partial) settings payload coming from the admin app
+	 * against the current stored settings. Unknown keys are ignored.
+	 */
+	public static function sanitize( array $in ) {
+		$s = self::get();
+
+		$bools = array( 'enabled', 'hide_for_admins', 'show_branding', 'show_revisit_badge', 'gcm_enabled', 'gcm_url_passthrough', 'gcm_ads_redaction' );
+		foreach ( $bools as $k ) {
+			if ( array_key_exists( $k, $in ) ) {
+				$s[ $k ] = empty( $in[ $k ] ) ? 0 : 1;
+			}
+		}
+
+		if ( array_key_exists( 'consent_expiry_days', $in ) ) {
+			$s['consent_expiry_days'] = max( 1, min( 3650, (int) $in['consent_expiry_days'] ) );
+		}
+		if ( array_key_exists( 'border_radius', $in ) ) {
+			$s['border_radius'] = max( 0, min( 40, (int) $in['border_radius'] ) );
+		}
+		if ( array_key_exists( 'gcm_wait_for_update', $in ) ) {
+			$s['gcm_wait_for_update'] = max( 0, min( 10000, (int) $in['gcm_wait_for_update'] ) );
+		}
+		if ( array_key_exists( 'banner_width', $in ) ) {
+			$s['banner_width'] = min( 60, max( 16, (float) $in['banner_width'] ) );
+		}
+
+		$texts = array( 'title', 'btn_accept_text', 'btn_decline_text', 'btn_adjust_text', 'btn_save_text', 'privacy_link_text', 'openai_model' );
+		foreach ( $texts as $k ) {
+			if ( array_key_exists( $k, $in ) ) {
+				$s[ $k ] = sanitize_text_field( (string) $in[ $k ] );
+			}
+		}
+		if ( array_key_exists( 'message', $in ) ) {
+			$s['message'] = wp_kses_post( (string) $in['message'] );
+		}
+		if ( array_key_exists( 'privacy_url', $in ) ) {
+			$s['privacy_url'] = esc_url_raw( (string) $in['privacy_url'] );
+		}
+		if ( array_key_exists( 'openai_api_key', $in ) ) {
+			$s['openai_api_key'] = trim( sanitize_text_field( (string) $in['openai_api_key'] ) );
+		}
+		foreach ( array( 'gtm_id', 'ga4_id' ) as $k ) {
+			if ( array_key_exists( $k, $in ) ) {
+				$s[ $k ] = preg_replace( '/[^A-Za-z0-9\-]/', '', trim( (string) $in[ $k ] ) );
+			}
+		}
+		foreach ( array( 'color_bg', 'color_text', 'color_primary', 'color_primary_text', 'color_secondary', 'color_secondary_text' ) as $k ) {
+			if ( array_key_exists( $k, $in ) ) {
+				$c = sanitize_hex_color( (string) $in[ $k ] );
+				if ( $c ) {
+					$s[ $k ] = $c;
+				}
+			}
+		}
+		if ( array_key_exists( 'position', $in ) && in_array( $in['position'], array( 'bottom-left', 'bottom-right', 'bottom-bar' ), true ) ) {
+			$s['position'] = $in['position'];
+		}
+		if ( array_key_exists( 'theme', $in ) ) {
+			$s['theme'] = ( 'dark' === $in['theme'] ) ? 'dark' : 'light';
+		}
+		if ( isset( $in['gcm_default'] ) && is_array( $in['gcm_default'] ) ) {
+			foreach ( array( 'functional', 'analytics', 'advertisement' ) as $c ) {
+				if ( isset( $in['gcm_default'][ $c ] ) ) {
+					$s['gcm_default'][ $c ] = ( 'granted' === $in['gcm_default'][ $c ] ) ? 'granted' : 'denied';
+				}
+			}
+		}
+
+		return wp_parse_args( $s, self::defaults() );
+	}
+
+	/**
+	 * Category metadata in a JS-friendly shape.
+	 */
+	public static function categories_payload() {
+		$out = array();
+		foreach ( self::categories() as $key => $cat ) {
+			$out[] = array(
+				'key'         => $key,
+				'label'       => $cat['label'],
+				'description' => $cat['description'],
+				'locked'      => ! empty( $cat['locked'] ),
+				'gcm'         => $cat['gcm'],
+			);
+		}
+		return $out;
+	}
+
+	/**
 	 * Resolve the privacy policy URL: explicit setting, else WP core privacy page.
 	 */
 	public static function privacy_url() {

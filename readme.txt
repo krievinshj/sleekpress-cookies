@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.0.4
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.1.0 =
+* New admin: rebuilt as a single Vue 3 app (vue-router, scoped components) on a shared "SleekPress UI" kit for a modern, consistent look across SleekPress plugins. Settings and the cookie list are now saved over the REST API with inline toasts; the Banner & design screen has a live preview.
+* Build: the admin app now ships pre-built in assets/admin/dist; developers build it with `npm install && npm run build` (Vite). Front-end banner is unchanged.
 
 = 1.0.4 =
 * Links pointing to #cookies-settings (and a few aliases) now open the preferences modal — handy for a "Cookie settings" link in the footer when the floating badge is disabled. Also works when loading a page with that hash already in the URL.

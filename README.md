@@ -18,6 +18,24 @@ A lightweight, self-hosted cookie-consent plugin for WordPress — a free altern
 - The scanner does not execute JavaScript, so it relies on (a) the built-in signature database and (b) cookies reported by real visitors. It is not a full headless-browser crawler.
 - Reopen the preferences modal anywhere with the `[sleekpress_cookie_settings]` shortcode or a link with `class="spc-open-prefs"`.
 
+## Development (admin app)
+
+The wp-admin UI is a Vue 3 single-page app in [`admin-app/`](admin-app/), built
+on the shared **SleekPress UI** kit vendored at
+[`vendor/sleekpress-ui/`](vendor/sleekpress-ui/) (see its README). The front-end
+consent banner is plain JS and has no build step.
+
+```bash
+npm install        # once
+npm run dev        # Vite dev server (for working on admin-app/)
+npm run build      # → assets/admin/dist/admin.js + admin.css  (commit these)
+```
+
+The PHP side just registers the menu page and calls
+`SleekPress_UI::enqueue_app()` / `::render_root()`; all admin data flows through
+the `spc/v1` REST routes (`/settings`, `/cookies`, `/scan`, `/ai-categorize`,
+`/merge`, `/observe`).
+
 ## Data stored
 
 - `spc_settings` — all settings (incl. the OpenAI key).
