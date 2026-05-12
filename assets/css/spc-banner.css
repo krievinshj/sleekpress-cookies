@@ -1,0 +1,279 @@
+/* SleekPress Cookies — front-end banner & modal */
+
+#spc-root {
+	--spc-bg: #ffffff;
+	--spc-text: #1f2933;
+	--spc-primary: #2563eb;
+	--spc-primary-text: #ffffff;
+	--spc-secondary: #e5e7eb;
+	--spc-secondary-text: #1f2933;
+	--spc-radius: 12px;
+}
+
+.spc-banner,
+.spc-modal__box,
+.spc-badge {
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.spc-banner *,
+.spc-modal *,
+.spc-badge * {
+	box-sizing: border-box;
+}
+
+/* ---------- banner ---------- */
+
+.spc-banner {
+	position: fixed;
+	z-index: 999999;
+	background: var(--spc-bg);
+	color: var(--spc-text);
+	border-radius: var(--spc-radius);
+	box-shadow: 0 10px 40px rgba( 0, 0, 0, 0.18 );
+	padding: 20px 22px;
+	width: 380px;
+	max-width: calc( 100vw - 32px );
+	animation: spc-in 0.25s ease;
+}
+
+@keyframes spc-in {
+	from { opacity: 0; transform: translateY( 12px ); }
+	to   { opacity: 1; transform: translateY( 0 ); }
+}
+
+.spc-pos-bottom-left  { left: 16px;  bottom: 16px; }
+.spc-pos-bottom-right { right: 16px; bottom: 16px; }
+.spc-banner.spc-pos-bottom-bar {
+	left: 0; right: 0; bottom: 0;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 24px;
+	padding: 16px 24px;
+}
+.spc-banner.spc-pos-bottom-bar .spc-banner__title { width: 100%; }
+.spc-banner.spc-pos-bottom-bar .spc-banner__text { flex: 1 1 320px; margin: 0; }
+.spc-banner.spc-pos-bottom-bar .spc-banner__actions { margin-top: 0; }
+
+.spc-banner__title {
+	margin: 0 0 8px;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--spc-text);
+}
+
+.spc-banner__text {
+	margin: 0 0 16px;
+	color: var(--spc-text);
+	opacity: 0.92;
+}
+
+.spc-banner__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.spc-banner__brand {
+	margin-top: 12px;
+	font-size: 11px;
+	opacity: 0.5;
+}
+
+/* ---------- buttons ---------- */
+
+.spc-btn {
+	-webkit-appearance: none;
+	appearance: none;
+	border: 0;
+	cursor: pointer;
+	border-radius: calc( var(--spc-radius) - 4px );
+	padding: 9px 16px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.2;
+	transition: filter 0.15s ease;
+	flex: 1 1 auto;
+	min-width: 84px;
+}
+.spc-btn:hover { filter: brightness( 0.94 ); }
+
+.spc-btn--primary {
+	background: var(--spc-primary);
+	color: var(--spc-primary-text);
+}
+.spc-btn--secondary {
+	background: var(--spc-secondary);
+	color: var(--spc-secondary-text);
+}
+
+.spc-link {
+	color: var(--spc-primary);
+	text-decoration: underline;
+}
+
+/* ---------- modal ---------- */
+
+.spc-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 1000000;
+	background: rgba( 0, 0, 0, 0.5 );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 16px;
+	animation: spc-in 0.2s ease;
+}
+
+.spc-modal__box {
+	background: var(--spc-bg);
+	color: var(--spc-text);
+	border-radius: var(--spc-radius);
+	width: 560px;
+	max-width: 100%;
+	max-height: 90vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	box-shadow: 0 20px 60px rgba( 0, 0, 0, 0.3 );
+}
+
+.spc-modal__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px 20px;
+	border-bottom: 1px solid rgba( 128, 128, 128, 0.2 );
+}
+.spc-modal__head h2 { margin: 0; font-size: 17px; }
+.spc-modal__close {
+	background: none; border: 0; cursor: pointer;
+	font-size: 24px; line-height: 1; color: inherit; opacity: 0.6;
+}
+.spc-modal__close:hover { opacity: 1; }
+
+.spc-modal__body {
+	padding: 8px 20px;
+	overflow-y: auto;
+}
+
+.spc-modal__foot {
+	display: flex;
+	gap: 8px;
+	padding: 16px 20px;
+	border-top: 1px solid rgba( 128, 128, 128, 0.2 );
+}
+
+.spc-modal__privacy {
+	padding: 0 20px 14px;
+	font-size: 12px;
+}
+
+/* ---------- categories ---------- */
+
+.spc-cat {
+	padding: 14px 0;
+	border-bottom: 1px solid rgba( 128, 128, 128, 0.15 );
+}
+.spc-cat:last-child { border-bottom: 0; }
+
+.spc-cat__bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+.spc-cat__label { font-weight: 700; font-size: 15px; }
+.spc-cat__always {
+	font-size: 12px;
+	font-weight: 600;
+	color: #15803d;
+}
+.spc-cat__desc {
+	margin: 6px 0 0;
+	font-size: 13px;
+	opacity: 0.85;
+}
+.spc-cat__toggle {
+	margin-top: 8px;
+	background: none;
+	border: 0;
+	padding: 0;
+	cursor: pointer;
+	color: var(--spc-primary);
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+/* switch */
+.spc-switch { position: relative; display: inline-block; width: 42px; height: 24px; flex: none; }
+.spc-switch input { opacity: 0; width: 0; height: 0; }
+.spc-switch__track {
+	position: absolute; inset: 0;
+	background: #b6bcc6;
+	border-radius: 24px;
+	transition: background 0.2s ease;
+}
+.spc-switch__track::before {
+	content: "";
+	position: absolute;
+	height: 18px; width: 18px;
+	left: 3px; top: 3px;
+	background: #fff;
+	border-radius: 50%;
+	transition: transform 0.2s ease;
+}
+.spc-switch input:checked + .spc-switch__track { background: var(--spc-primary); }
+.spc-switch input:checked + .spc-switch__track::before { transform: translateX( 18px ); }
+
+/* cookie list inside a category */
+.spc-cookies {
+	margin-top: 8px;
+	border: 1px solid rgba( 128, 128, 128, 0.2 );
+	border-radius: 8px;
+	padding: 4px 12px;
+	background: rgba( 128, 128, 128, 0.05 );
+}
+.spc-cookie-item {
+	padding: 8px 0;
+	border-bottom: 1px solid rgba( 128, 128, 128, 0.15 );
+}
+.spc-cookie-item:last-child { border-bottom: 0; }
+.spc-cookie-item__name { font-family: monospace; font-weight: 600; font-size: 12px; }
+.spc-cookie-item__meta { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+.spc-cookie-item__desc { font-size: 12px; opacity: 0.85; margin-top: 3px; }
+
+/* ---------- revisit badge ---------- */
+
+.spc-badge {
+	position: fixed;
+	z-index: 999998;
+	bottom: 16px;
+	width: 44px; height: 44px;
+	border-radius: 50%;
+	border: 0;
+	cursor: pointer;
+	background: var(--spc-bg);
+	color: var(--spc-text);
+	box-shadow: 0 6px 20px rgba( 0, 0, 0, 0.2 );
+	font-size: 20px;
+	line-height: 1;
+}
+.spc-badge.spc-pos-bottom-right { right: 16px; }
+.spc-badge.spc-pos-bottom-left,
+.spc-badge.spc-pos-bottom-bar { left: 16px; }
+
+@media ( max-width: 480px ) {
+	.spc-banner.spc-pos-bottom-left,
+	.spc-banner.spc-pos-bottom-right {
+		left: 8px; right: 8px; bottom: 8px; width: auto;
+	}
+}

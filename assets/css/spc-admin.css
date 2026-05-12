@@ -1,0 +1,18 @@
+/* SleekPress Cookies — admin */
+
+.spc-wrap .nav-tab-wrapper { margin-bottom: 16px; }
+.spc-tab-body { max-width: 1100px; }
+
+.spc-muted { color: #888; font-weight: normal; font-size: 12px; }
+
+.spc-status { margin: 10px 0; min-height: 1.4em; }
+.spc-status--ok   { color: #15803d; font-weight: 600; }
+.spc-status--warn { color: #b91c1c; font-weight: 600; }
+
+.spc-cookie-table textarea { width: 100%; min-width: 220px; }
+.spc-cookie-table input[type="text"] { width: 100%; }
+.spc-cookie-table td { vertical-align: top; }
+
+#spc-scan-results table { margin-top: 12px; }
+#spc-scan-results td { vertical-align: top; }
+#spc-scan-results textarea { font-size: 12px; }

@@ -1,0 +1,89 @@
+<?php
+/**
+ * REST endpoints: visitor cookie reporting + admin scan / AI calls.
+ *
+ * @package SleekPressCookies
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+class SPC_Rest {
+
+	const NS = 'spc/v1';
+
+	public function __construct() {
+		add_action( 'rest_api_init', array( $this, 'register' ) );
+	}
+
+	public function register() {
+		register_rest_route(
+			self::NS,
+			'/observe',
+			array(
+				'methods'             => 'POST',
+				'permission_callback' => '__return_true',
+				'callback'            => array( $this, 'observe' ),
+			)
+		);
+
+		$admin = array(
+			'methods'             => 'POST',
+			'permission_callback' => function () {
+				return current_user_can( 'manage_options' );
+			},
+		);
+
+		register_rest_route( self::NS, '/scan', $admin + array( 'callback' => array( $this, 'scan' ) ) );
+		register_rest_route( self::NS, '/ai-categorize', $admin + array( 'callback' => array( $this, 'ai_categorize' ) ) );
+		register_rest_route( self::NS, '/merge', $admin + array( 'callback' => array( $this, 'merge' ) ) );
+	}
+
+	/**
+	 * Public: a visitor's browser reporting the cookie names it currently has.
+	 * Body: { cookies: { "name": "domain", ... } }
+	 */
+	public function observe( WP_REST_Request $req ) {
+		$cookies = $req->get_param( 'cookies' );
+		if ( ! is_array( $cookies ) ) {
+			return new WP_REST_Response( array( 'ok' => false ), 400 );
+		}
+		// Trim to a sane size.
+		$cookies = array_slice( $cookies, 0, 60, true );
+		SPC_Scanner::record_observed( $cookies );
+		return new WP_REST_Response( array( 'ok' => true ), 200 );
+	}
+
+	public function scan() {
+		$result = SPC_Scanner::scan();
+		return new WP_REST_Response( $result, 200 );
+	}
+
+	/**
+	 * Body: { cookies: [ { name, domain, duration, provider }, ... ] }
+	 */
+	public function ai_categorize( WP_REST_Request $req ) {
+		$cookies = $req->get_param( 'cookies' );
+		if ( ! is_array( $cookies ) ) {
+			return new WP_REST_Response( array( 'error' => 'no cookies' ), 400 );
+		}
+		$out = SPC_AI::categorize( $cookies );
+		if ( is_wp_error( $out ) ) {
+			return new WP_REST_Response( array( 'error' => $out->get_error_message() ), 502 );
+		}
+		return new WP_REST_Response( array( 'cookies' => $out ), 200 );
+	}
+
+	/**
+	 * Body: { rows: [ { name, category, domain, duration, description, provider }, ... ] }
+	 */
+	public function merge( WP_REST_Request $req ) {
+		$rows = $req->get_param( 'rows' );
+		if ( ! is_array( $rows ) ) {
+			return new WP_REST_Response( array( 'error' => 'no rows' ), 400 );
+		}
+		$table = SPC_Scanner::merge_into_table( $rows );
+		return new WP_REST_Response( array( 'ok' => true, 'table' => $table ), 200 );
+	}
+}

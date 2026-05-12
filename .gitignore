@@ -1,0 +1,11 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.sublime-*
+
+# Dependencies / build (not used yet, but ignore by default)
+node_modules/
+vendor/
+*.log
