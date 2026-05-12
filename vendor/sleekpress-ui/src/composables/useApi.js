@@ -23,14 +23,20 @@ export function createApi( opts = {} ) {
 
 	async function request( method, path, body ) {
 		const { restBase, nonce } = resolved();
-		const url = restBase + ( path.startsWith( '/' ) ? path : '/' + path );
+		let url = restBase + ( path.startsWith( '/' ) ? path : '/' + path );
+		// Pass the nonce as a query param as well as a header — some servers /
+		// proxies strip custom request headers.
+		if ( nonce ) {
+			url += ( url.indexOf( '?' ) === -1 ? '?' : '&' ) + '_wpnonce=' + encodeURIComponent( nonce );
+		}
+		const headers = { 'Content-Type': 'application/json' };
+		if ( nonce ) {
+			headers['X-WP-Nonce'] = nonce;
+		}
 		const res = await fetch( url, {
 			method,
 			credentials: 'same-origin',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-WP-Nonce': nonce,
-			},
+			headers,
 			body: body !== undefined ? JSON.stringify( body ) : undefined,
 		} );
 		let data = null;

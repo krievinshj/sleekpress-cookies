@@ -63,8 +63,12 @@ class SleekPress_UI {
 
 		$config = array_merge(
 			array(
-				'restBase'  => $args['rest_namespace'] ? esc_url_raw( rest_url( $args['rest_namespace'] ) ) : esc_url_raw( rest_url() ),
-				'restRoot'  => esc_url_raw( rest_url() ),
+				// Relative URLs on purpose: an absolute rest_url() can resolve to
+				// a host/scheme that differs from the page being viewed (common on
+				// local dev), which makes the request cross-origin and drops the
+				// auth cookie -> 403. A path-relative URL is always same-origin.
+				'restBase'  => self::relative_url( $args['rest_namespace'] ? rest_url( $args['rest_namespace'] ) : rest_url() ),
+				'restRoot'  => self::relative_url( rest_url() ),
 				'nonce'     => wp_create_nonce( 'wp_rest' ),
 				'adminUrl'  => admin_url(),
 				'pluginUrl' => $args['dist_url'],
@@ -79,6 +83,22 @@ class SleekPress_UI {
 		);
 
 		return true;
+	}
+
+	/**
+	 * Strip scheme + host from a URL, keeping path (+ query). Handles both the
+	 * pretty (/wp-json/...) and the ?rest_route= forms.
+	 */
+	private static function relative_url( $url ) {
+		$parts = wp_parse_url( $url );
+		if ( false === $parts ) {
+			return $url;
+		}
+		$out = isset( $parts['path'] ) ? $parts['path'] : '/';
+		if ( ! empty( $parts['query'] ) ) {
+			$out .= '?' . $parts['query'];
+		}
+		return $out;
 	}
 
 	/**

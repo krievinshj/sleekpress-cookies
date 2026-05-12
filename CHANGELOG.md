@@ -5,6 +5,11 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-05-12
+
+### Fixed
+- Admin REST requests returned **403 Forbidden** when WordPress's configured site URL didn't exactly match the host/scheme being browsed (very common on Local/dev): the request became cross-origin, the browser dropped the auth cookie, and WP saw a logged-out request. `SleekPress_UI::enqueue_app()` now exposes a path-relative `restBase`/`restRoot` (always same-origin; works with both pretty permalinks and `?rest_route=`), and `createApi()` also appends the nonce as a `_wpnonce` query parameter in addition to the `X-WP-Nonce` header.
+
 ## [1.1.1] - 2026-05-12
 
 ### Fixed
@@ -64,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.1.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.2
 [1.1.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.1
 [1.1.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.0
 [1.0.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.0.4
