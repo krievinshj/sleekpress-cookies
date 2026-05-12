@@ -126,6 +126,7 @@ class SPC_Admin {
 					}
 				}
 				$s['border_radius']      = max( 0, min( 40, (int) ( $_POST['border_radius'] ?? 12 ) ) );
+				$s['banner_width']       = min( 60, max( 16, (float) ( $_POST['banner_width'] ?? 26.25 ) ) );
 				$s['show_branding']      = empty( $_POST['show_branding'] ) ? 0 : 1;
 				$s['show_revisit_badge'] = empty( $_POST['show_revisit_badge'] ) ? 0 : 1;
 				break;
@@ -405,6 +406,11 @@ class SPC_Admin {
 		$this->field_row( __( 'Decline / Adjust button — background', 'sleekpress-cookies' ), $this->color( 'color_secondary', $s['color_secondary'] ) );
 		$this->field_row( __( 'Decline / Adjust button — text', 'sleekpress-cookies' ), $this->color( 'color_secondary_text', $s['color_secondary_text'] ) );
 		$this->field_row( __( 'Corner radius (px)', 'sleekpress-cookies' ), sprintf( '<input type="number" min="0" max="40" name="border_radius" value="%d" />', (int) $s['border_radius'] ) );
+		$this->field_row(
+			__( 'Banner width (rem)', 'sleekpress-cookies' ),
+			sprintf( '<input type="number" step="0.25" min="16" max="60" name="banner_width" value="%s" /> <span class="description">≈ %dpx</span>', esc_attr( (string) (float) $s['banner_width'] ), (int) round( ( (float) $s['banner_width'] ) * 16 ) ),
+			__( 'Applies to the bottom-left / bottom-right box layouts. The full-width bar ignores it. Default 26.25rem (≈ 420px).', 'sleekpress-cookies' )
+		);
 
 		$this->field_row( __( 'Floating "cookie settings" badge', 'sleekpress-cookies' ), $this->cb( 'show_revisit_badge', $s['show_revisit_badge'], __( 'Show a small button so visitors can reopen their preferences', 'sleekpress-cookies' ) ) );
 		$this->field_row( __( 'Branding', 'sleekpress-cookies' ), $this->cb( 'show_branding', $s['show_branding'], __( 'Show "Powered by SleekPress Cookies" in the banner', 'sleekpress-cookies' ) ) );

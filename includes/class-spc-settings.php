@@ -80,6 +80,7 @@ class SPC_Settings {
 			'color_secondary'      => '#e5e7eb', // Decline / Adjust button bg.
 			'color_secondary_text' => '#1f2933',
 			'border_radius'        => 12,
+			'banner_width'         => 26.25, // rem; 26.25rem ≈ 420px. Box positions only.
 
 			// Tags.
 			'gtm_id'               => '', // GTM-XXXXXXX. If set, plugin prints the GTM snippet.

@@ -221,19 +221,24 @@ class SPC_Frontend {
 			)
 		);
 
-		// Colour variables.
+		// Colour & sizing variables. The stylesheet works in rem, so px-based
+		// settings (corner radius) are converted; the width setting is already
+		// a rem value.
+		$radius_rem = round( ( (int) $s['border_radius'] ) / 16, 4 );
+		$width_rem  = (float) $s['banner_width'];
 		$css = sprintf(
 			// Must match the selector used in spc-banner.css (#spc-root) so the
 			// custom properties actually override the bundled defaults — a
 			// ":root" rule would lose to "#spc-root" on specificity.
-			'#spc-root{--spc-bg:%s;--spc-text:%s;--spc-primary:%s;--spc-primary-text:%s;--spc-secondary:%s;--spc-secondary-text:%s;--spc-radius:%dpx;}',
+			'#spc-root{--spc-bg:%s;--spc-text:%s;--spc-primary:%s;--spc-primary-text:%s;--spc-secondary:%s;--spc-secondary-text:%s;--spc-radius:%srem;--spc-width:%srem;}',
 			esc_html( $s['color_bg'] ),
 			esc_html( $s['color_text'] ),
 			esc_html( $s['color_primary'] ),
 			esc_html( $s['color_primary_text'] ),
 			esc_html( $s['color_secondary'] ),
 			esc_html( $s['color_secondary_text'] ),
-			(int) $s['border_radius']
+			esc_html( (string) $radius_rem ),
+			esc_html( (string) ( $width_rem > 0 ? $width_rem : 26.25 ) )
 		);
 		if ( 'dark' === $s['theme'] ) {
 			$css .= '.spc-banner,.spc-modal__box{color-scheme:dark;}';

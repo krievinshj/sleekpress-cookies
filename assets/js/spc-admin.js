@@ -100,15 +100,15 @@
 			tr.appendChild( td( nameStrong ) );
 
 			var provInput = document.createElement( 'input' );
-			provInput.type = 'text'; provInput.value = ck.provider || ''; provInput.className = 'spc-f-provider'; provInput.style.width = '120px';
+			provInput.type = 'text'; provInput.value = ck.provider || ''; provInput.className = 'spc-f-provider'; provInput.style.width = '7.5rem';
 			tr.appendChild( td( provInput ) );
 
 			var durInput = document.createElement( 'input' );
-			durInput.type = 'text'; durInput.value = ck.duration || ''; durInput.className = 'spc-f-duration'; durInput.style.width = '110px';
+			durInput.type = 'text'; durInput.value = ck.duration || ''; durInput.className = 'spc-f-duration'; durInput.style.width = '6.875rem';
 			tr.appendChild( td( durInput ) );
 
 			var domInput = document.createElement( 'input' );
-			domInput.type = 'text'; domInput.value = ck.domain || ''; domInput.className = 'spc-f-domain'; domInput.style.width = '110px';
+			domInput.type = 'text'; domInput.value = ck.domain || ''; domInput.className = 'spc-f-domain'; domInput.style.width = '6.875rem';
 			tr.appendChild( td( domInput ) );
 
 			var sel = catSelect( ck.category || 'others' );
@@ -116,7 +116,7 @@
 			tr.appendChild( td( sel ) );
 
 			var descArea = document.createElement( 'textarea' );
-			descArea.rows = 2; descArea.value = ck.description || ''; descArea.className = 'spc-f-description'; descArea.style.minWidth = '220px';
+			descArea.rows = 2; descArea.value = ck.description || ''; descArea.className = 'spc-f-description'; descArea.style.minWidth = '13.75rem';
 			tr.appendChild( td( descArea ) );
 
 			tr.appendChild( td( ck.source || '' ) );
