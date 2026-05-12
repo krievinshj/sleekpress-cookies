@@ -5,7 +5,9 @@ import { nav } from './router.js';
 import { useStore } from './store.js';
 
 const cfg = window.SPCAdmin || {};
-const apiBase = cfg.restBase || '(not set)';
+const apiBase = cfg.ajaxUrl
+	? cfg.ajaxUrl + '?action=' + cfg.ajaxAction + ' → spc/v1'
+	: ( cfg.restBase || '(not set)' );
 const store = useStore();
 
 onMounted( store.load );

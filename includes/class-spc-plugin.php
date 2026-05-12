@@ -23,6 +23,9 @@ class SPC_Plugin {
 	/** @var SPC_Rest */
 	public $rest;
 
+	/** @var SPC_Ajax */
+	public $ajax;
+
 	public static function instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new self();
@@ -34,6 +37,7 @@ class SPC_Plugin {
 		$this->admin    = new SPC_Admin();
 		$this->frontend = new SPC_Frontend();
 		$this->rest     = new SPC_Rest();
+		$this->ajax     = new SPC_Ajax();
 
 		load_plugin_textdomain( 'sleekpress-cookies', false, dirname( plugin_basename( SPC_FILE ) ) . '/languages' );
 	}

@@ -28,6 +28,11 @@ class SleekPress_UI {
 	 *     @type string $config_var   JS global to receive the config object, e.g. 'SPCAdmin'.
 	 *     @type array  $config        Data to expose to the app (restBase, nonce, etc. are merged in).
 	 *     @type string $rest_namespace REST namespace, e.g. 'spc/v1' (used to build restBase).
+	 *     @type string $ajax_action   If set, exposes an admin-ajax transport: the app can route
+	 *                                 requests through admin-ajax.php (action = this value, nonce
+	 *                                 created from this value) instead of /wp-json/. More reliable
+	 *                                 cookie auth on some hosts. The plugin must register the
+	 *                                 matching wp_ajax_{action} handler.
 	 * }
 	 * @return bool True if the bundle was found and enqueued.
 	 */
@@ -43,6 +48,7 @@ class SleekPress_UI {
 				'config_var'     => 'SleekPressApp',
 				'config'         => array(),
 				'rest_namespace' => '',
+				'ajax_action'    => '',
 			)
 		);
 
@@ -61,20 +67,26 @@ class SleekPress_UI {
 		}
 		wp_enqueue_script( $args['handle'], $js_url, array(), $args['version'], true );
 
-		$config = array_merge(
-			array(
-				// Relative URLs on purpose: an absolute rest_url() can resolve to
-				// a host/scheme that differs from the page being viewed (common on
-				// local dev), which makes the request cross-origin and drops the
-				// auth cookie -> 403. A path-relative URL is always same-origin.
-				'restBase'  => self::relative_url( $args['rest_namespace'] ? rest_url( $args['rest_namespace'] ) : rest_url() ),
-				'restRoot'  => self::relative_url( rest_url() ),
-				'nonce'     => wp_create_nonce( 'wp_rest' ),
-				'adminUrl'  => admin_url(),
-				'pluginUrl' => $args['dist_url'],
-			),
-			(array) $args['config']
+		$base = array(
+			// Relative URLs on purpose: an absolute rest_url() can resolve to
+			// a host/scheme that differs from the page being viewed (common on
+			// local dev), which makes the request cross-origin and drops the
+			// auth cookie -> 403. A path-relative URL is always same-origin.
+			'restBase'  => self::relative_url( $args['rest_namespace'] ? rest_url( $args['rest_namespace'] ) : rest_url() ),
+			'restRoot'  => self::relative_url( rest_url() ),
+			'nonce'     => wp_create_nonce( 'wp_rest' ),
+			'adminUrl'  => admin_url(),
+			'pluginUrl' => $args['dist_url'],
 		);
+		if ( $args['ajax_action'] ) {
+			// admin-ajax.php lives under /wp-admin/, so the auth cookie is
+			// always sent to it — a more dependable transport than /wp-json/
+			// on environments where REST cookie auth misbehaves.
+			$base['ajaxUrl']    = self::relative_url( admin_url( 'admin-ajax.php' ) );
+			$base['ajaxAction'] = $args['ajax_action'];
+			$base['ajaxNonce']  = wp_create_nonce( $args['ajax_action'] );
+		}
+		$config = array_merge( $base, (array) $args['config'] );
 
 		wp_add_inline_script(
 			$args['handle'],

@@ -53,6 +53,7 @@ class SPC_Admin {
 				'version'        => SPC_VERSION,
 				'config_var'     => 'SPCAdmin',
 				'rest_namespace' => SPC_Rest::NS,
+				'ajax_action'    => SPC_Ajax::ACTION,
 				'config'         => array(
 					'mountId'    => self::ROOT,
 					'pageSlug'   => self::SLUG,

@@ -114,13 +114,20 @@ vendor/sleekpress-ui/
      'version'        => YOURPLUGIN_VERSION,
      'config_var'     => 'YourPluginAdmin',
      'rest_namespace' => 'yourplugin/v1',
+     // Optional but recommended: route the app's data calls through
+     // admin-ajax.php instead of /wp-json/. admin-ajax is under /wp-admin/,
+     // so the auth cookie is always sent — REST cookie auth can be flaky on
+     // some hosts. Register a matching wp_ajax_{action} handler that proxies
+     // to your REST routes (see SPC_Ajax in sleekpress-cookies for a copy-paste
+     // example using rest_do_request()).
+     'ajax_action'    => 'yourplugin_api',
      'config'         => array( /* anything your app needs at boot */ ),
    ) );
    // in the page render callback:
    SleekPress_UI::render_root( 'your-root', $built );
    ```
 
-   `enqueue_app()` also injects `window.YourPluginAdmin = { restBase, nonce, adminUrl, pluginUrl, ... }`.
+   `enqueue_app()` injects `window.YourPluginAdmin = { restBase, nonce, adminUrl, pluginUrl, ... }` — plus `ajaxUrl`, `ajaxAction`, `ajaxNonce` when `ajax_action` is set. `createApi()` automatically uses the admin-ajax transport if those are present, else falls back to a plain REST fetch.
 
 ## Re-skinning
 

@@ -5,6 +5,14 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-05-12
+
+### Fixed
+- **The admin app's data layer now uses `admin-ajax.php` instead of the REST API.** Repeated `403 rest_cookie_invalid_nonce` ("Cookie check failed") on some environments came down to the `/wp-json/` request being processed as *logged-out* (the `wp_<hash>` auth cookie is scoped to `/wp-admin/` and isn't sent to `/wp-json/`, and the `/`-scoped `wp_logged_in_…` cookie wasn't authenticating the REST request there). `admin-ajax.php` lives under `/wp-admin/`, so the auth cookie is always sent. New `SPC_Ajax` handler (`wp_ajax_spc_api`) verifies an admin-ajax nonce + `manage_options`, then dispatches internally to the existing `/spc/v1/*` routes via `rest_do_request()` — zero duplicated controller logic. The public `/spc/v1/observe` ping (used by the front-end banner) still uses REST.
+
+### Changed
+- `@sleekpress/ui`: `SleekPress_UI::enqueue_app()` accepts an `ajax_action` arg; when set it exposes `ajaxUrl`/`ajaxAction`/`ajaxNonce` in the boot config. The kit's `createApi()` automatically prefers the admin-ajax transport when that config is present, falling back to a plain REST fetch otherwise.
+
 ## [1.1.5] - 2026-05-12
 
 ### Changed
@@ -84,6 +92,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.2.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.0
 [1.1.5]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.5
 [1.1.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.4
 [1.1.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.3

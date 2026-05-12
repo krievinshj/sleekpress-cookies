@@ -6,7 +6,13 @@ import { routes } from './router.js';
 
 const cfg = window.SPCAdmin || {};
 
-configureApi( { restBase: cfg.restBase, nonce: cfg.nonce } );
+configureApi( {
+	restBase: cfg.restBase,
+	nonce: cfg.nonce,
+	ajaxUrl: cfg.ajaxUrl,
+	ajaxAction: cfg.ajaxAction,
+	ajaxNonce: cfg.ajaxNonce,
+} );
 
 const router = createRouter( {
 	history: createWebHashHistory(),
