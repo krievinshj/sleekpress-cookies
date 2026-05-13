@@ -102,6 +102,20 @@ class SPC_Cookie_DB {
 					array( 'name' => '_ttp', 'domain' => '', 'duration' => '1 year 1 month 4 days', 'description' => 'TikTok set this cookie to track and improve the performance of advertising campaigns and to personalise the user experience.' ),
 				),
 			),
+			'sourcebuster'       => array(
+				'provider'   => 'Sourcebuster.js',
+				'category'   => 'advertisement',
+				'signatures' => array( 'sbjs.js', 'sourcebuster', 'sbjs_writeCookies', 'sbjs.init(' ),
+				'cookies'    => array(
+					array( 'name' => 'sbjs_first', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie to record the visitor\'s first traffic source (UTM source/medium/campaign, referrer and entrance page) for marketing attribution.' ),
+					array( 'name' => 'sbjs_first_add', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie to record extra first-touch attribution data such as the timestamp and entrance page of the visitor\'s first visit.' ),
+					array( 'name' => 'sbjs_current', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie to record the traffic source of the visitor\'s current session (UTM tags and referrer) for marketing attribution.' ),
+					array( 'name' => 'sbjs_current_add', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie to record extra current-session attribution data such as the entrance page and timestamp.' ),
+					array( 'name' => 'sbjs_session', 'domain' => '', 'duration' => '30 minutes', 'description' => 'Sourcebuster sets this cookie to keep track of the current session: number of pages viewed and the entrance page.' ),
+					array( 'name' => 'sbjs_udata', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie to store basic user data — visit count, user agent and IP — used for marketing attribution.' ),
+					array( 'name' => 'sbjs_migrations', 'domain' => '', 'duration' => '6 months', 'description' => 'Sourcebuster sets this cookie as an internal flag tracking which cookie-schema migrations have been applied between versions of the library.' ),
+				),
+			),
 			'hubspot'            => array(
 				'provider'   => 'HubSpot, Inc.',
 				'category'   => 'analytics',

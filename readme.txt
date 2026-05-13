@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.2.1 =
+* Added Sourcebuster.js (the marketing-attribution library bundled by Fluent Forms, FluentCRM and others) to the built-in scanner database — sbjs_first, sbjs_first_add, sbjs_current, sbjs_current_add, sbjs_session, sbjs_udata, sbjs_migrations. Scans now categorise them as Advertisement with proper descriptions.
 
 = 1.2.0 =
 * Fixed (for real): the admin app's data calls now go through admin-ajax.php instead of /wp-json/. admin-ajax lives under /wp-admin/, so the login cookie is always sent to it — on some setups (Local/dev, certain host/proxy configs) the REST API was seeing the request as logged-out, which surfaced as "Cookie check failed". The handler just proxies internally to the same REST routes, so behaviour is unchanged. (The public consent ping still uses REST.)
