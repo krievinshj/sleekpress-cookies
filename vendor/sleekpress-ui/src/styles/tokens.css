@@ -59,6 +59,7 @@
 	/* Controls */
 	--sp-control-h: 2.25rem;
 	--sp-control-h-sm: 1.875rem;
+	--sp-control-radius: 0.5rem;
 
 	/* Shadows */
 	--sp-shadow-sm: 0 0.0625rem 0.125rem rgba( 17, 24, 39, 0.06 );

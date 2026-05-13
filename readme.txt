@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,10 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.2.4 =
+* Inputs now have a smaller 0.5rem corner radius (new `--sp-control-radius` token).
+* Colour inputs accept CSS variable references like `var(--theme-palette-color-1)` in addition to hex — handy for binding to your theme's design tokens. The swatch shows the resolved colour from the cascade, and the value passes through cleanly to the front-end banner.
 
 = 1.2.3 =
 * Admin layout: the content container is now ~1300px wide (was ~1024px). On the Banner & design screen the preview sidebar grew to 30rem, the preview banner uses the configured banner width, and its typography, padding and buttons now mirror the real front-end banner pixel-for-pixel — no more shrunken approximation.

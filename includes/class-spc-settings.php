@@ -169,8 +169,8 @@ class SPC_Settings {
 		}
 		foreach ( array( 'color_bg', 'color_text', 'color_primary', 'color_primary_text', 'color_secondary', 'color_secondary_text' ) as $k ) {
 			if ( array_key_exists( $k, $in ) ) {
-				$c = sanitize_hex_color( (string) $in[ $k ] );
-				if ( $c ) {
+				$c = self::sanitize_color_value( (string) $in[ $k ] );
+				if ( null !== $c ) {
 					$s[ $k ] = $c;
 				}
 			}
@@ -190,6 +190,31 @@ class SPC_Settings {
 		}
 
 		return wp_parse_args( $s, self::defaults() );
+	}
+
+	/**
+	 * Validate a colour value. Accepts a hex literal (#fff / #ffffff / #ffffffff)
+	 * or a CSS `var(--name)` reference (optionally with a hex / nested-var
+	 * fallback) so users can wire colours up to their theme's design tokens.
+	 *
+	 * @return string|null  Cleaned value, or null if the input is rejected.
+	 */
+	public static function sanitize_color_value( $v ) {
+		$v = trim( (string) $v );
+		if ( '' === $v ) {
+			return null;
+		}
+		if ( preg_match( '/^#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/i', $v ) ) {
+			return strtolower( $v );
+		}
+		// var(--name) | var(--name, #hex) | var(--name, var(--other))
+		if ( preg_match(
+			'/^var\(\s*--[A-Za-z0-9_-]+(?:\s*,\s*(?:#(?:[0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})|var\(\s*--[A-Za-z0-9_-]+\s*\)))?\s*\)$/i',
+			$v
+		) ) {
+			return $v;
+		}
+		return null;
 	}
 
 	/**

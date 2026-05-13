@@ -5,6 +5,15 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.4] - 2026-05-13
+
+### Added
+- Colour inputs now accept **CSS variable references** (e.g. `var(--theme-palette-color-1)`) in addition to hex literals — so plugins can wire colours up to the active theme's design tokens. `SPC_Settings::sanitize_color_value()` validates either a hex (`#fff`/`#ffffff`/`#ffffffff`) or a `var(--name)` expression (optionally with a hex or nested-var fallback). The swatch shows the resolved cascade colour, and the value is emitted verbatim in the front-end banner's inline CSS so it stays a live reference.
+
+### Changed
+- Inputs (text/select/textarea/colour-hex) corner radius reduced to `0.5rem` via a new `--sp-control-radius` design token.
+- `SpColorInput`: the native `<input type="color">` (which only renders hex) is replaced with a custom swatch element whose `background` is the raw value — so `var(...)` values resolve visually. The native picker is still wired in (hidden) and opens on click for hex-picking. The hex text field is wider to fit longer `var(...)` strings.
+
 ## [1.2.3] - 2026-05-13
 
 ### Changed
@@ -110,6 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.2.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.4
 [1.2.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.3
 [1.2.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.2
 [1.2.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.1

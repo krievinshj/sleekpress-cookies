@@ -50,7 +50,7 @@
 	color: var(--sp-text);
 	background: var(--sp-surface);
 	border: 1px solid var(--sp-border-strong);
-	border-radius: var(--sp-radius);
+	border-radius: var(--sp-control-radius);
 	padding: 0 var(--sp-space-3);
 	height: var(--sp-control-h);
 	box-shadow: var(--sp-shadow-sm);
