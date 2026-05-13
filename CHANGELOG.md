@@ -5,6 +5,14 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2026-05-13
+
+### Added
+- Cookie category labels and long descriptions (Necessary / Functional / Analytics / Advertisement / Others) are now translated according to the **Banner language** setting — both in the visitor's preferences modal and on the admin's *Cookie list* and *Consent Mode* screens. Latvian and Russian translations included.
+
+### Changed
+- `SPC_Settings::categories()` no longer hard-codes English `__()` calls; structural metadata (`locked`, `gcm`) stays in the class, while `label` and `description` are looked up from `SPC_I18n::categories()` for the resolved language.
+
 ## [1.3.0] - 2026-05-13
 
 ### Added
@@ -132,6 +140,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.3.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.3.1
 [1.3.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.3.0
 [1.2.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.4
 [1.2.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.3

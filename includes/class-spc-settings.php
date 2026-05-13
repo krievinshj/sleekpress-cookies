@@ -17,38 +17,26 @@ class SPC_Settings {
 	 * Each maps to one or more Google Consent Mode v2 signals.
 	 */
 	public static function categories() {
-		return array(
-			'necessary'     => array(
-				'label'       => __( 'Necessary', 'sleekpress-cookies' ),
-				'description' => __( 'Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.', 'sleekpress-cookies' ),
-				'locked'      => true,
-				'gcm'         => array( 'security_storage' ),
-			),
-			'functional'    => array(
-				'label'       => __( 'Functional', 'sleekpress-cookies' ),
-				'description' => __( 'Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.', 'sleekpress-cookies' ),
-				'locked'      => false,
-				'gcm'         => array( 'functionality_storage', 'personalization_storage' ),
-			),
-			'analytics'     => array(
-				'label'       => __( 'Analytics', 'sleekpress-cookies' ),
-				'description' => __( 'Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.', 'sleekpress-cookies' ),
-				'locked'      => false,
-				'gcm'         => array( 'analytics_storage' ),
-			),
-			'advertisement' => array(
-				'label'       => __( 'Advertisement', 'sleekpress-cookies' ),
-				'description' => __( 'Advertisement cookies are used to provide visitors with customised advertisements based on the pages you visited previously and to analyse the effectiveness of the ad campaigns.', 'sleekpress-cookies' ),
-				'locked'      => false,
-				'gcm'         => array( 'ad_storage', 'ad_user_data', 'ad_personalization' ),
-			),
-			'others'        => array(
-				'label'       => __( 'Others', 'sleekpress-cookies' ),
-				'description' => __( 'Other uncategorised cookies are those that are being analysed and have not been classified into a category as yet.', 'sleekpress-cookies' ),
-				'locked'      => false,
-				'gcm'         => array(),
-			),
+		// Per-category structural metadata. Labels + descriptions are pulled
+		// from SPC_I18n so they follow the banner-language setting.
+		$structure = array(
+			'necessary'     => array( 'locked' => true,  'gcm' => array( 'security_storage' ) ),
+			'functional'    => array( 'locked' => false, 'gcm' => array( 'functionality_storage', 'personalization_storage' ) ),
+			'analytics'     => array( 'locked' => false, 'gcm' => array( 'analytics_storage' ) ),
+			'advertisement' => array( 'locked' => false, 'gcm' => array( 'ad_storage', 'ad_user_data', 'ad_personalization' ) ),
+			'others'        => array( 'locked' => false, 'gcm' => array() ),
 		);
+		$translated = SPC_I18n::categories( self::resolved_language() );
+		$out = array();
+		foreach ( $structure as $key => $meta ) {
+			$out[ $key ] = array(
+				'label'       => isset( $translated[ $key ]['label'] ) ? $translated[ $key ]['label'] : $key,
+				'description' => isset( $translated[ $key ]['description'] ) ? $translated[ $key ]['description'] : '',
+				'locked'      => $meta['locked'],
+				'gcm'         => $meta['gcm'],
+			);
+		}
+		return $out;
 	}
 
 	public static function defaults() {
