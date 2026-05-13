@@ -35,6 +35,21 @@ async function save() {
 	const ok = await store.saveSettings( form.value );
 	if ( ok ) form.value = clone();
 }
+
+const TEXT_KEYS = [
+	'title', 'message', 'btn_accept_text', 'btn_decline_text',
+	'btn_adjust_text', 'btn_save_text', 'privacy_link_text',
+];
+
+function loadLanguageDefaults() {
+	const t = store.state.translatedDefaults || {};
+	for ( const k of TEXT_KEYS ) {
+		if ( t[ k ] ) {
+			form.value[ k ] = t[ k ];
+		}
+	}
+	store.toast.info( `Loaded ${ store.state.languageName } defaults — review and save.` );
+}
 </script>
 
 <template>
@@ -47,7 +62,10 @@ async function save() {
 
 		<div class="spc-banner-grid">
 			<div class="sp-stack sp-stack--lg">
-				<SpCard title="Content">
+				<SpCard title="Content" :description="`Wording shown in the banner. Change the language under Settings → Banner language.`">
+					<template #actions>
+						<SpButton variant="default" size="sm" @click="loadLanguageDefaults">Load {{ store.state.languageName }} defaults</SpButton>
+					</template>
 					<SpFormRow label="Banner title"><SpTextInput v-model="form.title" /></SpFormRow>
 					<SpFormRow label="Intro message" stacked hint="Basic HTML allowed. A link to your privacy policy is appended automatically.">
 						<SpTextarea v-model="form.message" :rows="4" />

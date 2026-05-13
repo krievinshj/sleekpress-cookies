@@ -3,7 +3,7 @@
  * Plugin Name:       SleekPress Cookies
  * Plugin URI:        https://sleekpress.com/
  * Description:        Lightweight cookie consent banner with a cookie scanner, AI-assisted categorisation and Google Consent Mode v2 support.
- * Version:           1.2.4
+ * Version:           1.3.0
  * Author:            SleekPress
  * License:           GPL-2.0-or-later
  * Text Domain:       sleekpress-cookies
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SPC_VERSION', '1.2.4' );
+define( 'SPC_VERSION', '1.3.0' );
 define( 'SPC_FILE', __FILE__ );
 define( 'SPC_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SPC_URL', plugin_dir_url( __FILE__ ) );
@@ -24,6 +24,7 @@ define( 'SPC_OPT_COOKIES', 'spc_cookies' );
 
 require_once SPC_DIR . 'vendor/sleekpress-ui/php/class-sleekpress-ui.php';
 require_once SPC_DIR . 'includes/class-spc-cookie-db.php';
+require_once SPC_DIR . 'includes/class-spc-i18n.php';
 require_once SPC_DIR . 'includes/class-spc-settings.php';
 require_once SPC_DIR . 'includes/class-spc-ai.php';
 require_once SPC_DIR . 'includes/class-spc-scanner.php';

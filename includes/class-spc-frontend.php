@@ -201,19 +201,7 @@ class SPC_Frontend {
 				'categories'  => $cat_payload,
 				'consent'     => $consent, // null if undecided.
 				'hasConsent'  => is_array( $consent ),
-				'texts'       => array(
-					'title'       => $s['title'],
-					'message'     => wp_kses_post( $s['message'] ),
-					'accept'      => $s['btn_accept_text'],
-					'decline'     => $s['btn_decline_text'],
-					'adjust'      => $s['btn_adjust_text'],
-					'save'        => $s['btn_save_text'],
-					'prefTitle'   => __( 'Customise consent preferences', 'sleekpress-cookies' ),
-					'privacyText' => $s['privacy_link_text'],
-					'showCookies' => __( 'Show cookies', 'sleekpress-cookies' ),
-					'hideCookies' => __( 'Hide cookies', 'sleekpress-cookies' ),
-					'always'      => __( 'Always active', 'sleekpress-cookies' ),
-				),
+				'texts'       => $this->banner_texts( $s ),
 				'privacyUrl'  => SPC_Settings::privacy_url(),
 				'position'    => $s['position'],
 				'showBadge'   => ! empty( $s['show_revisit_badge'] ),
@@ -244,6 +232,34 @@ class SPC_Frontend {
 			$css .= '.spc-banner,.spc-modal__box{color-scheme:dark;}';
 		}
 		wp_add_inline_style( 'spc-banner', $css );
+	}
+
+	/**
+	 * Build the text bundle shipped to the banner JS. User-edited fields are
+	 * used as-is (the admin "Load defaults" button is the way to swap language
+	 * defaults); the modal's built-in strings always come from the resolved
+	 * banner language.
+	 */
+	private function banner_texts( $s ) {
+		$t = SPC_I18n::strings( SPC_Settings::resolved_language() );
+		$or = function ( $val, $key ) use ( $t ) {
+			$val = is_string( $val ) ? trim( $val ) : '';
+			return '' !== $val ? $val : $t[ $key ];
+		};
+		return array(
+			'title'       => $or( $s['title'] ?? '', 'title' ),
+			'message'     => wp_kses_post( $or( $s['message'] ?? '', 'message' ) ),
+			'accept'      => $or( $s['btn_accept_text'] ?? '', 'btn_accept_text' ),
+			'decline'     => $or( $s['btn_decline_text'] ?? '', 'btn_decline_text' ),
+			'adjust'      => $or( $s['btn_adjust_text'] ?? '', 'btn_adjust_text' ),
+			'save'        => $or( $s['btn_save_text'] ?? '', 'btn_save_text' ),
+			'privacyText' => $or( $s['privacy_link_text'] ?? '', 'privacy_link_text' ),
+			// Modal-only strings: never user-overridable, always follow language.
+			'prefTitle'   => $t['modal_title'],
+			'showCookies' => $t['show_cookies'],
+			'hideCookies' => $t['hide_cookies'],
+			'always'      => $t['always_active'],
+		);
 	}
 
 	/**

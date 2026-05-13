@@ -57,6 +57,7 @@ class SPC_Settings {
 			'enabled'              => 1,
 			'hide_for_admins'      => 0,
 			'consent_expiry_days'  => 365,
+			'language'             => 'auto', // auto | en | lv | ru — drives modal strings + AI prompt language.
 
 			// Banner content.
 			'title'                => __( 'We value your privacy', 'sleekpress-cookies' ),
@@ -146,6 +147,10 @@ class SPC_Settings {
 		if ( array_key_exists( 'banner_width', $in ) ) {
 			$s['banner_width'] = min( 60, max( 16, (float) $in['banner_width'] ) );
 		}
+		if ( array_key_exists( 'language', $in ) ) {
+			$lang_keys = array_keys( SPC_I18n::languages() );
+			$s['language'] = in_array( $in['language'], $lang_keys, true ) ? $in['language'] : 'auto';
+		}
 
 		$texts = array( 'title', 'btn_accept_text', 'btn_decline_text', 'btn_adjust_text', 'btn_save_text', 'privacy_link_text', 'openai_model' );
 		foreach ( $texts as $k ) {
@@ -232,6 +237,13 @@ class SPC_Settings {
 			);
 		}
 		return $out;
+	}
+
+	/**
+	 * The banner language code to use right now (resolves "auto" against the WP locale).
+	 */
+	public static function resolved_language() {
+		return SPC_I18n::resolve( self::get_value( 'language', 'auto' ) );
 	}
 
 	/**

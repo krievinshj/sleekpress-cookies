@@ -17,6 +17,10 @@ const state = reactive( {
 	aiReady: false,
 	version: '',
 	lastScan: null,
+	languages: [],
+	resolvedLanguage: 'en',
+	languageName: 'English',
+	translatedDefaults: {},
 } );
 
 function applySettingsPayload( p ) {
@@ -27,6 +31,10 @@ function applySettingsPayload( p ) {
 	state.aiReady = !! p.aiReady;
 	state.version = p.version || '';
 	state.lastScan = p.lastScan || null;
+	state.languages = p.languages || [];
+	state.resolvedLanguage = p.resolvedLanguage || 'en';
+	state.languageName = p.languageName || 'English';
+	state.translatedDefaults = p.translatedDefaults || {};
 }
 
 async function load() {

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import {
-	SpPageHeader, SpCard, SpFormRow, SpToggle, SpTextInput, SpNumberInput, SpButton, SpNotice,
+	SpPageHeader, SpCard, SpFormRow, SpToggle, SpTextInput, SpNumberInput, SpSelect, SpButton, SpNotice,
 } from '@sleekpress/ui';
 import { useStore } from '../store.js';
 
@@ -29,6 +29,12 @@ async function save() {
 		</SpPageHeader>
 
 		<SpCard title="General">
+			<SpFormRow label="Banner language" description="Drives the modal's built-in strings (“Always active”, “Show cookies”, …), the “Load defaults” preset on the Banner & design tab, and the language AI uses when writing cookie descriptions. If you run TranslatePress/WPML/Polylang, leave this on Auto and translate via your multilingual plugin instead.">
+				<SpSelect v-model="form.language" :options="store.state.languages" />
+				<template #hint>
+					Currently resolved to: <code>{{ store.state.languageName }}</code>
+				</template>
+			</SpFormRow>
 			<SpFormRow label="Consent banner" description="Show the cookie banner on the front end.">
 				<SpToggle v-model="form.enabled" label="Enabled" />
 			</SpFormRow>

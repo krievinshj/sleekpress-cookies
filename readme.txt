@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.2.4
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.3.0 =
+* New "Banner language" setting (Auto / English / Latvian / Russian). It translates the modal's built-in strings ("Always active", "Show cookies", etc.), and tells the OpenAI cookie-description prompt which language to write in. On the Banner & design tab there's a "Load <Language> defaults" button that fills the editable text fields with translated defaults you can then tweak. Multilingual sites should leave this on Auto and rely on TranslatePress / WPML / Polylang for output translation as before.
 
 = 1.2.4 =
 * Inputs now have a smaller 0.5rem corner radius (new `--sp-control-radius` token).

@@ -125,14 +125,23 @@ class SPC_Rest {
 	/* ---------------- settings ---------------- */
 
 	private function settings_payload() {
+		$lang = SPC_Settings::resolved_language();
+		$langs = array();
+		foreach ( SPC_I18n::languages() as $code => $label ) {
+			$langs[] = array( 'value' => $code, 'label' => $label );
+		}
 		return array(
-			'settings'      => SPC_Settings::get(),
-			'categories'    => SPC_Settings::categories_payload(),
-			'privacyAuto'   => SPC_Settings::privacy_url(),
-			'wpPrivacyUrl'  => function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '',
-			'aiReady'       => SPC_AI::is_configured(),
-			'version'       => SPC_VERSION,
-			'lastScan'      => SPC_Scanner::last_scan(),
+			'settings'           => SPC_Settings::get(),
+			'categories'         => SPC_Settings::categories_payload(),
+			'privacyAuto'        => SPC_Settings::privacy_url(),
+			'wpPrivacyUrl'       => function_exists( 'get_privacy_policy_url' ) ? get_privacy_policy_url() : '',
+			'aiReady'            => SPC_AI::is_configured(),
+			'version'            => SPC_VERSION,
+			'lastScan'           => SPC_Scanner::last_scan(),
+			'languages'          => $langs,
+			'resolvedLanguage'   => $lang,
+			'languageName'       => SPC_I18n::language_name( $lang ),
+			'translatedDefaults' => SPC_I18n::strings( $lang ),
 		);
 	}
 

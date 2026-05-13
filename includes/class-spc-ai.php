@@ -35,12 +35,17 @@ class SPC_AI {
 
 		$categories = array_keys( SPC_Settings::categories() );
 
+		$lang_code = SPC_Settings::resolved_language();
+		$lang_name = SPC_I18n::language_name( $lang_code );
+
 		$system = 'You are a privacy/GDPR assistant. For each browser cookie you are given, return a JSON object. '
 			. 'Classify it into exactly one of these categories: ' . implode( ', ', $categories ) . '. '
 			. 'Use "necessary" for strictly functional/session/security cookies, "functional" for preferences and embedded media, '
 			. '"analytics" for measurement/statistics, "advertisement" for marketing/retargeting, and "others" only if genuinely unknown. '
 			. 'Also write a concise, factual, one or two sentence description of what the cookie does and who sets it, '
-			. 'written for a public cookie policy. If you can infer the provider/company, fill the "provider" field, otherwise leave it as the given value.';
+			. 'written for a public cookie policy. If you can infer the provider/company, fill the "provider" field, otherwise leave it as the given value. '
+			. 'Write the "description" value in ' . $lang_name . '. '
+			. 'The "category" and "name" values must stay in their original (English / cookie-name) form.';
 
 		$payload_cookies = array();
 		foreach ( $cookies as $c ) {

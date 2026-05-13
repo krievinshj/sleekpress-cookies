@@ -5,6 +5,19 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-05-13
+
+### Added
+- **Banner language** setting (`Auto` / `English` / `Latvian` / `Russian`) on the **Settings** tab. New `SPC_I18n` class holds the translation table.
+  - Drives the modal's built-in strings (`Always active`, `Show cookies`, `Customise consent preferences`, …) — they're always emitted in the resolved language regardless of saved user-text values.
+  - Drives the **AI cookie-description** prompt: when the language is Latvian or Russian, OpenAI is asked to write the `description` field in that language (category keys and cookie names stay English).
+  - On the **Banner & design** tab there's a new "Load `<Language>` defaults" button that copies the translated defaults into the editable text fields (title, message, button labels, privacy link text) so users don't have to translate them by hand.
+- User-edited banner text fields now gracefully fall back to the language's translated value when left blank.
+- `GET /spc/v1/settings` exposes `languages`, `resolvedLanguage`, `languageName` and `translatedDefaults` for the admin app.
+
+### Notes
+- This is independent of WordPress's site locale and of multilingual plugins. On a multilingual site, leave Banner language on **Auto** and translate via TranslatePress / WPML / Polylang as usual — they translate the rendered strings on output.
+
 ## [1.2.4] - 2026-05-13
 
 ### Added
@@ -119,6 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.3.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.3.0
 [1.2.4]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.4
 [1.2.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.3
 [1.2.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.2
