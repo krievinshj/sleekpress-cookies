@@ -25,7 +25,8 @@ const previewVars = computed( () => ( {
 	'--p-primary-text': form.value.color_primary_text,
 	'--p-secondary': form.value.color_secondary,
 	'--p-secondary-text': form.value.color_secondary_text,
-	'--p-radius': form.value.border_radius + 'px',
+	'--p-radius': ( ( form.value.border_radius || 0 ) / 16 ) + 'rem',
+	'--p-width': ( form.value.banner_width || 26.25 ) + 'rem',
 } ) );
 
 const privacyResolved = computed( () => form.value.privacy_url || store.state.wpPrivacyUrl || '' );
@@ -118,37 +119,96 @@ async function save() {
 </template>
 
 <style scoped>
-.spc-banner-grid { display: grid; grid-template-columns: 1fr 22rem; gap: var(--sp-space-5); align-items: start; }
+.spc-banner-grid { display: grid; grid-template-columns: minmax( 0, 1fr ) 30rem; gap: var(--sp-space-5); align-items: start; }
 @media ( max-width: 64rem ) { .spc-banner-grid { grid-template-columns: 1fr; } }
 .spc-preview-col { position: sticky; top: var(--sp-space-5); }
 
+/* The frame around the preview — a tiled "viewport" so the banner has some
+ * surrounding visual context. */
 .spc-preview {
 	background:
-		repeating-linear-gradient( 45deg, var(--sp-surface-2), var(--sp-surface-2) 10px, var(--sp-surface) 10px, var(--sp-surface) 20px );
+		repeating-linear-gradient( 45deg, var(--sp-surface-2), var(--sp-surface-2) 0.625rem, var(--sp-surface) 0.625rem, var(--sp-surface) 1.25rem );
 	padding: var(--sp-space-5);
-	min-height: 16rem;
+	min-height: 18rem;
 	display: flex;
+	align-items: flex-end;
 	border-radius: 0 0 var(--sp-radius-lg) var(--sp-radius-lg);
 }
+
+/* These rules deliberately mirror .spc-banner / .spc-btn / etc. in
+ * assets/css/spc-banner.css 1:1 (same paddings, font sizes, radii) so the
+ * preview is a faithful representation, not a scaled-down sketch. */
 .spc-preview__banner {
 	background: var(--p-bg);
 	color: var(--p-text);
 	border-radius: var(--p-radius);
-	box-shadow: 0 10px 30px rgba( 0,0,0,0.18 );
-	padding: var(--sp-space-4);
-	width: 100%;
-	align-self: flex-end;
-	font-size: 0.78rem;
+	box-shadow: 0 0.625rem 2.5rem rgba( 0, 0, 0, 0.18 );
+	padding: 1.25rem 1.375rem;
+	width: var(--p-width);
+	max-width: 100%;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
-.spc-preview__banner.is-bottom-left { align-self: flex-end; margin-right: auto; max-width: 17rem; }
-.spc-preview__banner.is-bottom-right { align-self: flex-end; margin-left: auto; max-width: 17rem; }
-.spc-preview__banner.is-bottom-bar { border-radius: 0; max-width: 100%; }
-.spc-preview__title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
-.spc-preview__text { opacity: 0.92; margin-bottom: 0.6rem; }
-.spc-preview__link { color: var(--p-primary); text-decoration: underline; margin-left: 0.25rem; }
-.spc-preview__actions { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-.spc-preview__btn { border: 0; cursor: default; font-weight: 600; font-size: 0.72rem; padding: 0.4rem 0.6rem; border-radius: calc( var(--p-radius) - 4px ); flex: 1 1 auto; }
+.spc-preview__banner * { box-sizing: border-box; }
+.spc-preview__banner.is-bottom-left { margin-right: auto; }
+.spc-preview__banner.is-bottom-right { margin-left: auto; }
+.spc-preview__banner.is-bottom-bar {
+	width: 100%;
+	max-width: 100%;
+	border-radius: 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1.5rem;
+	padding: 1rem 1.5rem;
+}
+.spc-preview__banner.is-bottom-bar .spc-preview__title { width: 100%; }
+.spc-preview__banner.is-bottom-bar .spc-preview__text { flex: 1 1 20rem; margin: 0; }
+.spc-preview__banner.is-bottom-bar .spc-preview__actions { margin-top: 0; }
+
+.spc-preview__title {
+	margin: 0 0 0.5rem;
+	font-size: 1.25rem;
+	font-weight: 700;
+	line-height: 1.3;
+	color: var(--p-text);
+}
+.spc-preview__text {
+	margin: 0 0 1rem;
+	color: var(--p-text);
+	opacity: 0.92;
+}
+.spc-preview__link {
+	color: var(--p-primary);
+	text-decoration: underline;
+	margin-left: 0.25rem;
+}
+.spc-preview__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.spc-preview__btn {
+	-webkit-appearance: none;
+	appearance: none;
+	border: 0;
+	cursor: default;
+	font-family: inherit;
+	font-weight: 600;
+	font-size: 0.875rem;
+	line-height: 1.2;
+	padding: 0.5625rem 1rem;
+	border-radius: calc( var(--p-radius) - 0.25rem );
+	flex: 1 1 auto;
+	min-width: 5.25rem;
+}
 .spc-preview__btn.is-primary { background: var(--p-primary); color: var(--p-primary-text); }
 .spc-preview__btn.is-secondary { background: var(--p-secondary); color: var(--p-secondary-text); }
-.spc-preview__brand { margin-top: 0.5rem; font-size: 0.6rem; opacity: 0.5; }
+.spc-preview__brand {
+	margin-top: 0.75rem;
+	font-size: 0.6875rem;
+	opacity: 0.5;
+}
 </style>

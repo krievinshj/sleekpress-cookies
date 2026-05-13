@@ -67,7 +67,7 @@
 
 	/* Layout */
 	--sp-sidebar-w: 14rem;
-	--sp-content-max: 64rem;
+	--sp-content-max: 81.25rem; /* ≈ 1300px */
 	--sp-z-modal: 100050;
 	--sp-z-toast: 100060;
 }

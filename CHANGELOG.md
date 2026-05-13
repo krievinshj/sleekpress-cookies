@@ -5,6 +5,13 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.3] - 2026-05-13
+
+### Changed
+- Admin content container widened from `64rem` (≈ 1024px) to `81.25rem` (≈ 1300px) — `--sp-content-max` in the kit's `tokens.css`.
+- **Banner & design** preview column grew from 22rem to 30rem.
+- The preview banner now uses the configured `banner_width` (rem) and mirrors the real front-end banner pixel-for-pixel: same paddings, font sizes (title `1.25rem`, body `0.875rem`), button sizing, radius scaling, and bottom-bar flex layout. No more shrunken approximation.
+
 ## [1.2.2] - 2026-05-13
 
 ### Added
@@ -103,6 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.2.3]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.3
 [1.2.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.2
 [1.2.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.1
 [1.2.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.0

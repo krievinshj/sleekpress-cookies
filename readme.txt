@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.2.3 =
+* Admin layout: the content container is now ~1300px wide (was ~1024px). On the Banner & design screen the preview sidebar grew to 30rem, the preview banner uses the configured banner width, and its typography, padding and buttons now mirror the real front-end banner pixel-for-pixel — no more shrunken approximation.
 
 = 1.2.2 =
 * Added WooCommerce (woocommerce_cart_hash, woocommerce_items_in_cart, wp_woocommerce_session_*, woocommerce_recently_viewed, tk_ni) and Automattic Tracks (tk_ai, tk_qs, tk_lr, tk_or, tk_r3d, tk_tc) to the built-in scanner database. Scans now categorise the WooCommerce cart cookies as Necessary and the Tracks analytics cookies as Analytics with proper descriptions.
