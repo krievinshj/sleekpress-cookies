@@ -4,7 +4,7 @@ Tags: cookie consent, gdpr, google consent mode, cookie banner, cookie scanner
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.2
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ No. It does not execute JavaScript. It relies on a built-in signature database p
 In the visitor's browser only, in the `spc_consent` cookie.
 
 == Changelog ==
+
+= 1.2.2 =
+* Added WooCommerce (woocommerce_cart_hash, woocommerce_items_in_cart, wp_woocommerce_session_*, woocommerce_recently_viewed, tk_ni) and Automattic Tracks (tk_ai, tk_qs, tk_lr, tk_or, tk_r3d, tk_tc) to the built-in scanner database. Scans now categorise the WooCommerce cart cookies as Necessary and the Tracks analytics cookies as Analytics with proper descriptions.
 
 = 1.2.1 =
 * Added Sourcebuster.js (the marketing-attribution library bundled by Fluent Forms, FluentCRM and others) to the built-in scanner database — sbjs_first, sbjs_first_add, sbjs_current, sbjs_current_add, sbjs_session, sbjs_udata, sbjs_migrations. Scans now categorise them as Advertisement with proper descriptions.

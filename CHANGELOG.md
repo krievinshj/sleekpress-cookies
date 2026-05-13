@@ -5,6 +5,12 @@ All notable changes to **SleekPress Cookies** are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] - 2026-05-13
+
+### Added
+- Built-in scanner database now recognises **WooCommerce** core cart cookies (`woocommerce_cart_hash`, `woocommerce_items_in_cart`, `wp_woocommerce_session_*`, `woocommerce_recently_viewed`, `tk_ni`) — categorised as Necessary.
+- Built-in scanner database now recognises **Automattic Tracks** cookies (`tk_ai`, `tk_qs`, `tk_lr`, `tk_or`, `tk_r3d`, `tk_tc`), which are loaded by WooCommerce's admin client and by Jetpack — categorised as Analytics.
+
 ## [1.2.1] - 2026-05-13
 
 ### Added
@@ -97,6 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Optional Google Tag Manager container ID (plugin prints the snippet after the consent defaults) or GA4 Measurement ID (plugin loads gtag.js). Both optional — Consent Mode works without them.
 - `[sleekpress_cookie_settings]` shortcode and `.spc-open-prefs` link hook to reopen the preferences modal.
 
+[1.2.2]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.2
 [1.2.1]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.1
 [1.2.0]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.2.0
 [1.1.5]: https://github.com/krievinshj/sleekpress-cookies/releases/tag/v1.1.5

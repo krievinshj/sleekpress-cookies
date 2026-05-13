@@ -102,6 +102,31 @@ class SPC_Cookie_DB {
 					array( 'name' => '_ttp', 'domain' => '', 'duration' => '1 year 1 month 4 days', 'description' => 'TikTok set this cookie to track and improve the performance of advertising campaigns and to personalise the user experience.' ),
 				),
 			),
+			'woocommerce'        => array(
+				'provider'   => 'WooCommerce',
+				'category'   => 'necessary',
+				'signatures' => array( '/wc-ajax/', 'woocommerce-no-js', 'wc_add_to_cart_params', 'wc-blocks', '/woocommerce/assets/', 'woocommerce_params' ),
+				'cookies'    => array(
+					array( 'name' => 'woocommerce_cart_hash', 'domain' => '', 'duration' => 'session', 'description' => 'WooCommerce sets this cookie to track the cart contents and detect when the cart has been changed, so the mini-cart and checkout can be updated.' ),
+					array( 'name' => 'woocommerce_items_in_cart', 'domain' => '', 'duration' => 'session', 'description' => 'WooCommerce sets this cookie to indicate whether the cart contains items, so it can update the cart display without a full page reload.' ),
+					array( 'name' => 'wp_woocommerce_session_*', 'domain' => '', 'duration' => '2 days', 'description' => 'WooCommerce sets this cookie with a unique code for each customer so it can find their cart data in the database.' ),
+					array( 'name' => 'woocommerce_recently_viewed', 'domain' => '', 'duration' => 'session', 'description' => 'WooCommerce sets this cookie to power the "recently viewed products" widget.' ),
+					array( 'name' => 'tk_ni', 'domain' => '', 'duration' => 'session', 'description' => 'WooCommerce/Automattic sets this cookie to register whether the user has opted out of activity tracking.' ),
+				),
+			),
+			'automattic-tracks'  => array(
+				'provider'   => 'Automattic, Inc.',
+				'category'   => 'analytics',
+				'signatures' => array( 'pix.wp.com', 'stats.wp.com', 'tracks.js', 'wccom-tracker', 'wpcom_analytics' ),
+				'cookies'    => array(
+					array( 'name' => 'tk_ai', 'domain' => '', 'duration' => '1 year', 'description' => 'Automattic Tracks (bundled with WooCommerce admin / Jetpack) sets this cookie to store an anonymous user identifier used for product analytics across Automattic services.' ),
+					array( 'name' => 'tk_qs', 'domain' => '', 'duration' => 'session', 'description' => 'Automattic Tracks sets this cookie as a per-session queue identifier used while batching analytics events.' ),
+					array( 'name' => 'tk_lr', 'domain' => '', 'duration' => '1 year', 'description' => 'Automattic Tracks sets this cookie to store the last referrer URL for attribution.' ),
+					array( 'name' => 'tk_or', 'domain' => '', 'duration' => '5 years', 'description' => 'Automattic Tracks sets this cookie to store the original referrer URL for attribution.' ),
+					array( 'name' => 'tk_r3d', 'domain' => '', 'duration' => '3 days', 'description' => 'Automattic Tracks sets this cookie as part of its analytics queue/retry mechanism.' ),
+					array( 'name' => 'tk_tc', 'domain' => '', 'duration' => 'session', 'description' => 'Automattic Tracks sets this cookie to record campaign/click information for marketing attribution.' ),
+				),
+			),
 			'sourcebuster'       => array(
 				'provider'   => 'Sourcebuster.js',
 				'category'   => 'advertisement',
