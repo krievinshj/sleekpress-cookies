@@ -39,7 +39,14 @@ class SPC_Plugin {
 		$this->rest     = new SPC_Rest();
 		$this->ajax     = new SPC_Ajax();
 
-		load_plugin_textdomain( 'sleekpress-cookies', false, dirname( plugin_basename( SPC_FILE ) ) . '/languages' );
+		// On `init`, not here: WordPress 6.7 warns when a textdomain is
+		// loaded earlier, and this runs on plugins_loaded.
+		add_action(
+			'init',
+			static function () {
+				load_plugin_textdomain( 'sleekpress-cookies', false, dirname( plugin_basename( SPC_FILE ) ) . '/languages' );
+			}
+		);
 	}
 
 	/**
